@@ -3,6 +3,9 @@ import java.time.format.DateTimeFormatter;
 import java.io.*;
 import java.net.*;
 
+public static final int LOG_LENGTH = 10;
+public static final int LOWEST_RANK = 10;
+
 class TimeRank
 {
 	
@@ -29,10 +32,10 @@ class TimeRank
 		String rankbefore_preString = "<span class=\"ah_r\">";
 		String rankbefore_postString = "</span>";
 		String rankString = "";
-		String [] rank1to10 = new String[10];
+		String [] rank1to10 = new String[LOWEST_RANK];
 		int end = 0;
 
-		for (int i=1; i<=10; i++){
+		for (int i=1; i<=LOWEST_RANK; i++){
 			rankString = rankbefore_preString + i + rankbefore_postString;
 			while ((readString = bfr.readLine()) != null){
 				if (readString.equals(rankString)){
@@ -51,7 +54,7 @@ class TimeRank
 		time = LocalDateTime.now(ZoneId.of("GMT+9")).withNano(0);
 		timeSimple = time.format( DateTimeFormatter.ISO_LOCAL_TIME );
 		String result = timeSimple + "\t";
-		for (int i=0; i<10; i++){
+		for (int i=0; i<LOWEST_RANK; i++){
 			result += timerank[i] + "\t";
 		}
 		return result + "\r\n";
@@ -69,14 +72,15 @@ public class NaverRankMain
 
 		String intro = "\t----- Naver Top 10 Trending Searches (" + temp.timeString + " KST) -----\r\n\t\t1st\t2nd\t3rd\t4th\t5th\t6th\t7th\t8th\t9th\t10th\r\n";
 
-		for (int i=0; i<10; i++){
+		for (int i=0; i<LOWEST_RANK; i++){
 			if (i==0) System.out.println(temp.timeSimple + "Rank");
 			System.out.println("  " + (i+1) + ": " + rankarr[i]);
 		}
 		newTimeRank = temp.addNewTimeRank(rankarr);
 		System.out.println( "\r\n" + intro + newTimeRank );
 
-		File ranktxt = new File("/Users/dhryou/Documents", "NaverRank.txt");
+		//Change directory address to save .txt log here
+		File ranktxt = new File("/Users/(Mac User Name)/(Directory to save to)", "NaverRank.txt");
 		FileOutputStream fos = new FileOutputStream( ranktxt );
 		PrintWriter pwriter = new PrintWriter( fos );
 		StringBuffer add = new StringBuffer( newTimeRank );
@@ -86,7 +90,7 @@ public class NaverRankMain
 
 		int freq = 0;
 		Thread main = Thread.currentThread();
-		while (freq++ < 10){
+		while (freq++ < LOG_LENGTH){
 			main.sleep(5000);
 			rankarr = temp.fetchRanking();
 			newTimeRank = temp.addNewTimeRank(rankarr);
