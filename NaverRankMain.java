@@ -5,6 +5,7 @@ import java.net.*;
 
 public static final int LOG_LENGTH = 10;
 public static final int LOWEST_RANK = 10;
+public static final int REFRESH_RATE = 5000;
 
 class TimeRank
 {
@@ -91,7 +92,7 @@ public class NaverRankMain
 		int freq = 0;
 		Thread main = Thread.currentThread();
 		while (freq++ < LOG_LENGTH){
-			main.sleep(5000);
+			main.sleep(REFRESH_RATE);
 			rankarr = temp.fetchRanking();
 			newTimeRank = temp.addNewTimeRank(rankarr);
 			System.out.println(newTimeRank);
