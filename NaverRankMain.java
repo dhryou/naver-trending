@@ -52,8 +52,6 @@ class TimeRank
 		timeSimple = time.format( DateTimeFormatter.ISO_LOCAL_TIME );
 		String result = timeSimple + "\t";
 		for (int i=0; i<10; i++){
-			// if (timerank[i].length() > 3)
-			// 	timerank[i] = timerank[i].substring(0, 3);
 			result += timerank[i] + "\t";
 		}
 		return result + "\r\n";
@@ -66,7 +64,6 @@ public class NaverRankMain
 	public static void main(String[] args) throws IOException, Exception
 	{
 		TimeRank temp = new TimeRank();
-		//TimeRank [] timerankArr = new TimeRank[120];
 		String[] rankarr = temp.fetchRanking();
 		String newTimeRank = "";
 
